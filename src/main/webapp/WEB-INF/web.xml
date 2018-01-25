@@ -1,0 +1,87 @@
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee
+	      http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+         version="2.4">
+
+    <display-name>Example servlets application</display-name>
+
+    <servlet>
+        <servlet-name>ListServlet</servlet-name>
+        <servlet-class>pl.epoint.servlets.servlets.ProductListServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>WelcomeServlet</servlet-name>
+        <servlet-class>pl.epoint.servlets.servlets.DefaultServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>ProductEditServlet</servlet-name>
+        <servlet-class>pl.epoint.servlets.servlets.ProductEditServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>ProductAddServlet</servlet-name>
+        <servlet-class>pl.epoint.servlets.servlets.ProductAddServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>ProductDeleteServlet</servlet-name>
+        <servlet-class>pl.epoint.servlets.servlets.ProductDeleteServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ListServlet</servlet-name>
+        <url-pattern>/list</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProductAddServlet</servlet-name>
+        <url-pattern>/add</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProductEditServlet</servlet-name>
+        <url-pattern>/edit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProductDeleteServlet</servlet-name>
+        <url-pattern>/delete</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>WelcomeServlet</servlet-name>
+        <url-pattern></url-pattern>
+    </servlet-mapping>
+
+    <filter>
+        <filter-name>CharsetFilter</filter-name>
+        <filter-class>pl.epoint.servlets.filters.CharsetFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>CharsetFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>LoginFilter</filter-name>
+        <filter-class>pl.epoint.servlets.filters.LoginFilter</filter-class>
+    </filter>
+
+    <!--<filter-mapping>-->
+        <!--<filter-name>LoginFilter</filter-name>-->
+        <!--<url-pattern>/*</url-pattern>-->
+    <!--</filter-mapping>-->
+
+    <jsp-config>
+        <jsp-property-group>
+            <url-pattern>*.jsp</url-pattern>
+            <page-encoding>UTF-8</page-encoding>
+        </jsp-property-group>
+    </jsp-config>
+
+    <error-page>
+        <exception-type>java.lang.IllegalArgumentException</exception-type>
+        <location>/error.jsp</location>
+    </error-page>
+
+</web-app>

@@ -1,0 +1,25 @@
+Configuration:
+  name: Default
+
+  Properties:
+    Property:
+      name: filename
+      value: /home/ddorokhov/tmp/servlets.log
+
+  Appenders:
+
+    File:
+      name: File_Appender
+      fileName: ${filename}
+      PatternLayout:
+        Pattern: "%d %p %C{1.} [%t] %m%n"
+      Filters:
+        ThresholdFilter:
+          level: info
+
+  Loggers:
+
+    Root:
+      level: debug
+      AppenderRef:
+        ref: File_Appender
