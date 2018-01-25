@@ -32,25 +32,22 @@ public class ProductEditServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Integer productId = ServletUtils.getRequiredIntegerParam(PRODUCT_ID, req, resp);
-        if(productId == null) return;
 
-        throw new IllegalArgumentException("Some text that should be shown on error page");
-
-//        addProductToRequestAttributes(req, productId);
-//        req.getRequestDispatcher("/product-edit.jsp").forward(req, resp);
+        addProductToRequestAttributes(req, productId);
+        req.getRequestDispatcher("/product-edit.jsp").forward(req, resp);
     }
 
-    private void addProductToRequestAttributes(HttpServletRequest req, Integer productId) throws ServletException {
+    private void addProductToRequestAttributes(HttpServletRequest req, Integer productId) {
         Product product = productManager.getProductByPK(productId);
         if(product == null)
-            throw new ServletException(String.format("There is no product with id '%s'", productId));
+            throw new IllegalArgumentException(String.format("There is no product with id '%s'", productId));
+
         req.setAttribute("product", product);
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String action = getRequiredParam("action", req, resp);
-        if(action == null) return;
 
         switch(action) {
             case SAVE_PRODUCT_ACTION:
@@ -65,17 +62,14 @@ public class ProductEditServlet extends HttpServlet {
 
     private void saveProduct(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Integer id = getRequiredIntegerParam(PRODUCT_ID, req, resp);
-        if(id == null) return;
-
         String name = getRequiredParam(PRODUCT_NAME, req, resp);
-        if(name == null) return;
-
         BigDecimal price = getRequiredBigDecimalParam(PRODUCT_PRICE, req, resp);
-        if(price == null) return;
 
         Product updatedProduct = new Product(name, price);
         updatedProduct.setId(id);
+
         productManager.updateProduct(updatedProduct);
+
         log.info("Product '{}' updated", name);
     }
 }

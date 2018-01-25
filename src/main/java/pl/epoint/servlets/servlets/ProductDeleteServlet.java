@@ -22,9 +22,8 @@ public class ProductDeleteServlet extends HttpServlet {
     private ProductManager productManager = ProductMemoryManagerImpl.get();
 
     @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Integer productId = getRequiredIntegerParam(PRODUCT_ID, req, resp);
-        if(productId == null) return;
 
         Product removedProduct = productManager.deleteProductByPK(productId);
         log.info("Product '{}' deleted", removedProduct.getName());

@@ -30,26 +30,18 @@ public class ProductAddServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Product newProduct = assembleProductFromRequest(req, resp);
-        if (newProduct == null) return;
-
         productManager.insertProduct(newProduct);
+
         log.info("New product added: " + newProduct.getName());
+
         resp.sendRedirect("/products/list");
     }
 
-    @Nullable
     private Product assembleProductFromRequest(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String name = getRequiredParam(PRODUCT_NAME, req, resp);
-        if(name == null)
-            return null;
-
         BigDecimal price = getRequiredBigDecimalParam(PRODUCT_PRICE, req, resp);
-        if(price == null)
-            return null;
-
-        Product newProduct = new Product(name, price);
-        return newProduct;
+        return new Product(name, price);
     }
 }
