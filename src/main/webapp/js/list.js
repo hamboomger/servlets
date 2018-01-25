@@ -2,13 +2,8 @@ $(".delete-product").click(function() {
 	let rowElem = $(this).parent().parent()
     let productId = rowElem.attr("productId")
 
-    console.log(productId)
-
 	deleteProductFromServer(productId)
-
-	rowElem.fadeTo("slow",0.7, function(){
-           $(this).remove();
-    })
+	rowElem.remove()
 });
 
 function deleteProductFromServer(productId) {
