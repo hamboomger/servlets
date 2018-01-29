@@ -13,7 +13,8 @@ import pl.epoint.servlets.dao.ProductManager;
 import pl.epoint.servlets.dao.ProductMemoryManagerImpl;
 import pl.epoint.servlets.model.Product;
 
-import static pl.epoint.servlets.util.ServletUtils.*;
+import static pl.epoint.servlets.util.ServletUtils.getRequiredBigDecimalParam;
+import static pl.epoint.servlets.util.ServletUtils.getRequiredParam;
 
 @Log4j2
 public class ProductAddServlet extends HttpServlet {
@@ -35,7 +36,7 @@ public class ProductAddServlet extends HttpServlet {
 
         log.info("New product added: " + newProduct.getName());
 
-        resp.sendRedirect("/products/list");
+        resp.sendRedirect("/products/list/");
     }
 
     private Product assembleProductFromRequest(HttpServletRequest req, HttpServletResponse resp) {

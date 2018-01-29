@@ -12,8 +12,8 @@ import java.math.BigDecimal;
 import pl.epoint.servlets.dao.ProductManager;
 import pl.epoint.servlets.dao.ProductMemoryManagerImpl;
 import pl.epoint.servlets.model.Product;
-import pl.epoint.servlets.util.ServletUtils;
 
+import static pl.epoint.servlets.util.ServletParameters.ACTION;
 import static pl.epoint.servlets.util.ServletUtils.getRequiredBigDecimalParam;
 import static pl.epoint.servlets.util.ServletUtils.getRequiredIntegerParam;
 import static pl.epoint.servlets.util.ServletUtils.getRequiredParam;
@@ -31,10 +31,25 @@ public class ProductEditServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Integer productId = ServletUtils.getRequiredIntegerParam(PRODUCT_ID, req);
+        Integer productId = getRequiredIntegerParam(PRODUCT_ID, req);
 
         addProductToRequestAttributes(req, productId);
         req.getRequestDispatcher("/product-edit.jsp").forward(req, resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        String action = getRequiredParam(ACTION, req);
+
+        switch(action) {
+            case SAVE_PRODUCT_ACTION:
+                saveProduct(req);
+                resp.sendRedirect("/products/list/");
+                break;
+            default:
+                resp.sendError(418, "Unknown action: " + action);
+                break;
+        }
     }
 
     private void addProductToRequestAttributes(HttpServletRequest req, Integer productId) {
@@ -45,22 +60,7 @@ public class ProductEditServlet extends HttpServlet {
         req.setAttribute("product", product);
     }
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String action = getRequiredParam("action", req);
-
-        switch(action) {
-            case SAVE_PRODUCT_ACTION:
-                saveProduct(req, resp);
-                resp.sendRedirect("/products/list");
-                break;
-            default:
-                resp.sendError(418, "Unknown action: " + action);
-                break;
-        }
-    }
-
-    private void saveProduct(HttpServletRequest req, HttpServletResponse resp) {
+    private void saveProduct(HttpServletRequest req) {
         Integer id = getRequiredIntegerParam(PRODUCT_ID, req);
         String name = getRequiredParam(PRODUCT_NAME, req);
         BigDecimal price = getRequiredBigDecimalParam(PRODUCT_PRICE, req);
@@ -72,4 +72,5 @@ public class ProductEditServlet extends HttpServlet {
 
         log.info("Product '{}' updated", name);
     }
+
 }

@@ -10,7 +10,7 @@
     <div class="columns">
         <div class="column is-three-fifths-tablet is-offset-one-fifth-tablet is-one-third is-offset-one-third">
             <div class="box">
-                <form action="/products?action=login" method="POST">
+                <form action="/products/login/" method="POST">
                     <div class="field is-horizontal">
                         <div class="field-label is-normal">
                             <label class="label">Login: </label>
@@ -47,7 +47,7 @@
                                 </div>
 
                                 <div class="control">
-                                    <a href="/products/list" class="button is-text">Zarejestruj się</a>
+                                    <a href="/products/list/" class="button is-text">Zarejestruj się</a>
                                 </div>
                             </div>
                         </div>

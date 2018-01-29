@@ -10,11 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static pl.epoint.servlets.util.ServletUtils.getRequiredParam;
+import static pl.epoint.servlets.util.ServletParameters.ACTION;
 
 public class LoginFilter implements Filter {
 
-    private static final String LOGIN_ACTION = "login";
+    private static final String LOGIN_PAGE = "/products/login/";
 
     @Override
     public void init(FilterConfig filterConfig) {}
@@ -25,29 +25,28 @@ public class LoginFilter implements Filter {
         HttpServletRequest httpRequest = (HttpServletRequest)request;
         HttpServletResponse httpResponse = (HttpServletResponse)response;
 
-        if(httpRequest.getSession().getAttribute("userId") != null) {
+        if(requestHasParameter(httpRequest, ACTION, "logout")) {
+            httpRequest.getSession().setAttribute("userId", null);
+            httpResponse.sendRedirect("/products/login/");
+
+        } else if(sessionContainsUserId(httpRequest)) {
             chain.doFilter(request, response);
-            return;
-        }
 
-        String actionParam = getRequiredParam("action", httpRequest);
+        } else if(httpRequest.getRequestURI().equals(LOGIN_PAGE)) {
+            chain.doFilter(request, response);
 
-        switch (actionParam) {
-            case LOGIN_ACTION:
-                boolean success = performLogin(httpRequest);
-                if(success) {
-                    chain.doFilter(request, response);
-                } else {
-                    httpRequest.setAttribute("error", "Login or password is invalid");
-                    httpResponse.sendRedirect("/products/login");
-                }
+        } else {
+            httpResponse.sendRedirect(LOGIN_PAGE);
         }
     }
 
-    private boolean performLogin(HttpServletRequest httpRequest) {
-        String login = getRequiredParam("login", httpRequest);
-        String password = getRequiredParam("password", httpRequest);
-        return login.equals("jack") && password.equals("sparrow");
+    private boolean requestHasParameter(HttpServletRequest req, String attributeName, String attributeValue) {
+        Object value = req.getParameter(attributeName);
+        return value != null && value.equals(attributeValue);
+    }
+
+    private boolean sessionContainsUserId(HttpServletRequest httpRequest) {
+        return httpRequest.getSession().getAttribute("userId") != null;
     }
 
     @Override

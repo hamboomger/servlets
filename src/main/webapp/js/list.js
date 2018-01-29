@@ -7,7 +7,7 @@ $(".delete-product").click(function() {
 });
 
 function deleteProductFromServer(productId) {
-	fetch('/products/delete?productId='+productId, {
+	fetch('/products/delete/?productId='+productId, {
 	    method: 'DELETE'
 	}).then(response => {
 	    console.log('Response status: ' + response.status)
