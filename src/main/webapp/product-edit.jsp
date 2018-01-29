@@ -5,12 +5,22 @@
     <title>Product edit page</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.4/css/all.css">
+    <link rel="stylesheet" href="/products/css/main.css">
 </head>
 <body>
+    <div class="navbar has-shadow">
+        <div class="navbar-menu is-active">
+            <div class="navbar-end">
+                <div class="navbar-item">
+                    <a href="?action=logout" class="button is-dark">Wyloguj</a>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="columns">
         <div class="column is-three-fifths-tablet is-offset-one-fifth-tablet is-one-third is-offset-one-third">
             <div class="box">
-                <form action="/products/edit?action=save_product&productId=${product.id}" method="POST">
+                <form action="/products/edit/?action=save_product&productId=${product.id}" method="POST">
                     <div class="field is-horizontal">
                         <div class="field-label is-normal">
                             <label class="label">Nazwa: </label>
@@ -48,7 +58,7 @@
                                     <input type="submit" class="button is-primary" value="Zapisz">
                                 </div>
                                 <div class="control">
-                                    <a href="/products/list" class="button is-text">Anuluj</a>
+                                    <a href="/products/list/" class="button is-text">Anuluj</a>
                                 </div>
                             </div>
                         </div>
