@@ -2,7 +2,6 @@ package pl.epoint.servlets.servlets;
 
 import lombok.extern.log4j.Log4j2;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,8 +21,8 @@ public class ProductDeleteServlet extends HttpServlet {
     private ProductManager productManager = ProductMemoryManagerImpl.get();
 
     @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        Integer productId = getRequiredIntegerParam(PRODUCT_ID, req, resp);
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) {
+        Integer productId = getRequiredIntegerParam(PRODUCT_ID, req);
 
         Product removedProduct = productManager.deleteProductByPK(productId);
         log.info("Product '{}' deleted", removedProduct.getName());

@@ -31,7 +31,7 @@ public class ProductEditServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Integer productId = ServletUtils.getRequiredIntegerParam(PRODUCT_ID, req, resp);
+        Integer productId = ServletUtils.getRequiredIntegerParam(PRODUCT_ID, req);
 
         addProductToRequestAttributes(req, productId);
         req.getRequestDispatcher("/product-edit.jsp").forward(req, resp);
@@ -47,7 +47,7 @@ public class ProductEditServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String action = getRequiredParam("action", req, resp);
+        String action = getRequiredParam("action", req);
 
         switch(action) {
             case SAVE_PRODUCT_ACTION:
@@ -60,10 +60,10 @@ public class ProductEditServlet extends HttpServlet {
         }
     }
 
-    private void saveProduct(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        Integer id = getRequiredIntegerParam(PRODUCT_ID, req, resp);
-        String name = getRequiredParam(PRODUCT_NAME, req, resp);
-        BigDecimal price = getRequiredBigDecimalParam(PRODUCT_PRICE, req, resp);
+    private void saveProduct(HttpServletRequest req, HttpServletResponse resp) {
+        Integer id = getRequiredIntegerParam(PRODUCT_ID, req);
+        String name = getRequiredParam(PRODUCT_NAME, req);
+        BigDecimal price = getRequiredBigDecimalParam(PRODUCT_PRICE, req);
 
         Product updatedProduct = new Product(name, price);
         updatedProduct.setId(id);

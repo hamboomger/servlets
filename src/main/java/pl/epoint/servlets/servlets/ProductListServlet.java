@@ -15,11 +15,14 @@ import pl.epoint.servlets.dao.ProductMemoryManagerImpl;
 public class ProductListServlet extends HttpServlet {
 
     private ProductManager productManager = ProductMemoryManagerImpl.get();
+    private int visitsCounter;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("products", productManager.getProductsList());
         req.getRequestDispatcher("/list.jsp").forward(req, resp);
+
+        log.info("Visits counter[List Servlet]: {}", ++visitsCounter);
     }
 
 }

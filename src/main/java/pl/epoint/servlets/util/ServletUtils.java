@@ -1,10 +1,8 @@
 package pl.epoint.servlets.util;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigDecimal;
 
@@ -15,9 +13,8 @@ public class ServletUtils {
      * Otherwise resp.sendError() is called, and method returns null.
      */
     @NotNull
-    public static Integer getRequiredIntegerParam(String paramName,
-            HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String parameterStr = getRequiredParam(paramName, req, resp);
+    public static Integer getRequiredIntegerParam(String paramName, HttpServletRequest req) {
+        String parameterStr = getRequiredParam(paramName, req);
 
         try {
             return Integer.parseInt(parameterStr);
@@ -32,9 +29,8 @@ public class ServletUtils {
      * Otherwise resp.sendError() is called, and method returns null.
      */
     @NotNull
-    public static BigDecimal getRequiredBigDecimalParam(String paramName,
-            HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String parameterStr = getRequiredParam(paramName, req, resp);
+    public static BigDecimal getRequiredBigDecimalParam(String paramName, HttpServletRequest req) {
+        String parameterStr = getRequiredParam(paramName, req);
 
         try {
             return new BigDecimal(parameterStr);
@@ -48,8 +44,7 @@ public class ServletUtils {
      * @return parameter, if exists. Otherwise resp.sendError() is called, and method returns null.
      */
     @NotNull
-    public static String getRequiredParam(String paramName,
-            HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    public static String getRequiredParam(String paramName, HttpServletRequest req) {
         String parameter = req.getParameter(paramName);
         if(parameter == null) {
             throw new IllegalArgumentException(String.format("'%s' request parameter is missing", paramName));
@@ -57,16 +52,6 @@ public class ServletUtils {
             throw new IllegalArgumentException(String.format("'%s' request parameter is empty", paramName));
         }
         return parameter;
-    }
-
-    /**
-     * @return whether parameter value is the same as expected.
-     * Otherwise resp.sendError() is called, and method returns false.
-     */
-    public static boolean requiredParamHasValue(String paramName, String value,
-            HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String parameter = getRequiredParam(paramName, req, resp);
-        return parameter.equals(value);
     }
 
 }

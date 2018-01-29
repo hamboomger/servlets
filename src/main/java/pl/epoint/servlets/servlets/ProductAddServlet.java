@@ -1,7 +1,6 @@
 package pl.epoint.servlets.servlets;
 
 import lombok.extern.log4j.Log4j2;
-import org.jetbrains.annotations.Nullable;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -39,9 +38,9 @@ public class ProductAddServlet extends HttpServlet {
         resp.sendRedirect("/products/list");
     }
 
-    private Product assembleProductFromRequest(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String name = getRequiredParam(PRODUCT_NAME, req, resp);
-        BigDecimal price = getRequiredBigDecimalParam(PRODUCT_PRICE, req, resp);
+    private Product assembleProductFromRequest(HttpServletRequest req, HttpServletResponse resp) {
+        String name = getRequiredParam(PRODUCT_NAME, req);
+        BigDecimal price = getRequiredBigDecimalParam(PRODUCT_PRICE, req);
         return new Product(name, price);
     }
 }
