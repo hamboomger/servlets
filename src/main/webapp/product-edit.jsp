@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="columns">
-        <div class="column is-three-fifths is-offset-one-fifth">
+        <div class="column is-three-fifths-tablet is-offset-one-fifth-tablet is-one-third is-offset-one-third">
             <div class="box">
                 <form action="/products/edit?action=save_product&productId=${product.id}" method="POST">
                     <div class="field is-horizontal">
