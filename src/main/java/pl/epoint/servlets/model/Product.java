@@ -10,12 +10,17 @@ public class Product {
     private String name;
     private BigDecimal price;
 
-    public Product(String name, BigDecimal price) {
+    public Product(Integer id, String name, BigDecimal price) {
         Preconditions.checkNotNull(name, "Name argument is null");
         Preconditions.checkNotNull(price, "Price argument is null");
 
+        this.id = id;
         this.name = name;
         this.price = price.setScale(2, RoundingMode.UP);
+    }
+
+    public Product(String name, BigDecimal price) {
+        this(null, name, price);
     }
 
     public Integer getId() {

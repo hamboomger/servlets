@@ -8,13 +8,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import pl.epoint.servlets.dao.ProductDatabaseManagerImpl;
 import pl.epoint.servlets.dao.ProductManager;
-import pl.epoint.servlets.dao.ProductMemoryManagerImpl;
 
 @Log4j2
 public class ProductListServlet extends HttpServlet {
 
-    private ProductManager productManager = ProductMemoryManagerImpl.get();
+    private ProductManager productManager = ProductDatabaseManagerImpl.get();
     private int visitsCounter;
 
     @Override

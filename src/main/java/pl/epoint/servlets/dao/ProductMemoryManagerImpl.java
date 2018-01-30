@@ -29,6 +29,8 @@ public class ProductMemoryManagerImpl implements ProductManager {
         return daoSingleton;
     }
 
+    private ProductMemoryManagerImpl() {}
+
     @Override
     public List<Product> getProductsList() {
         return Collections.unmodifiableList(products);

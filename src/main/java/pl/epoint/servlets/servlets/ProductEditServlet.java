@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigDecimal;
 
+import pl.epoint.servlets.dao.ProductDatabaseManagerImpl;
 import pl.epoint.servlets.dao.ProductManager;
-import pl.epoint.servlets.dao.ProductMemoryManagerImpl;
 import pl.epoint.servlets.model.Product;
 
 import static pl.epoint.servlets.util.ServletParameters.ACTION;
@@ -27,7 +27,7 @@ public class ProductEditServlet extends HttpServlet {
     private static final String PRODUCT_PRICE = "productPrice";
     private static final String PRODUCT_ID = "productId";
 
-    private ProductManager productManager = ProductMemoryManagerImpl.get();
+    private ProductManager productManager = ProductDatabaseManagerImpl.get();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

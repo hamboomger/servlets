@@ -5,10 +5,9 @@ import lombok.extern.log4j.Log4j2;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
+import pl.epoint.servlets.dao.ProductDatabaseManagerImpl;
 import pl.epoint.servlets.dao.ProductManager;
-import pl.epoint.servlets.dao.ProductMemoryManagerImpl;
 import pl.epoint.servlets.model.Product;
 
 import static pl.epoint.servlets.util.ServletUtils.getRequiredIntegerParam;
@@ -18,7 +17,7 @@ public class ProductDeleteServlet extends HttpServlet {
 
     private static final String PRODUCT_ID = "productId";
 
-    private ProductManager productManager = ProductMemoryManagerImpl.get();
+    private ProductManager productManager = ProductDatabaseManagerImpl.get();
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) {
