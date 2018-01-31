@@ -27,7 +27,6 @@ public class ProductDatabaseManagerImpl implements ProductManager {
         insertProduct(new Product("Jaja", new BigDecimal(12.2)));
         insertProduct(new Product("Więcej jaj", BigDecimal.TEN));
         insertProduct(new Product("Kazjerka", new BigDecimal(8.25)));
-        insertProduct(new Product("Śmietana", new BigDecimal(-1)));
     }
 
     @Override

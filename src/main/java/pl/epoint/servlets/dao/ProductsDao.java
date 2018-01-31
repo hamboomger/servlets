@@ -42,6 +42,8 @@ public class ProductsDao {
     public void insertProduct(Product product) {
         String query = String.format("insert into %s(%s,%s) values (?,?)", TABLE, COL_NAME, COL_PRICE);
         template.update(query, product.getName(), product.getPrice());
+        Integer id = template.queryForObject("select last_insert_id()", Integer.class);
+        product.setId(id);
     }
 
     public void updateProduct(Product product) {
@@ -71,10 +73,11 @@ public class ProductsDao {
     };
 
     private void initTable() {
-        template.update("create table if not exists " + TABLE + "("
+        log.info("create table if not exists " + TABLE + "("
                 + COL_ID + " int not null AUTO_INCREMENT PRIMARY KEY, "
                 + COL_NAME + " varchar(12) not null, "
-                + COL_PRICE + " decimal(6,2) not null)");
+                + COL_PRICE + " decimal(6,2) not null,"
+                + "CHECK(" + COL_PRICE + " >= '0.00'))");
     }
 
 }
