@@ -73,7 +73,7 @@ public class ProductsDao {
     private void initTable() {
         template.update("create table if not exists " + TABLE + "("
                 + COL_ID + " int not null AUTO_INCREMENT PRIMARY KEY, "
-                + COL_NAME + " varchar not null, "
+                + COL_NAME + " varchar(12) not null, "
                 + COL_PRICE + " decimal(6,2) not null)");
     }
 
