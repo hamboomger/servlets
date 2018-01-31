@@ -1,5 +1,7 @@
 package pl.epoint.servlets.filters;
 
+import org.springframework.util.StringUtils;
+
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -17,22 +19,23 @@ public class LoginFilter implements Filter {
     private static final String LOGIN_PAGE = "/products/login/";
 
     @Override
-    public void init(FilterConfig filterConfig) {}
+    public void init(FilterConfig filterConfig) {
+    }
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain) throws IOException, ServletException {
-        HttpServletRequest httpRequest = (HttpServletRequest)request;
-        HttpServletResponse httpResponse = (HttpServletResponse)response;
+        HttpServletRequest httpRequest = (HttpServletRequest) request;
+        HttpServletResponse httpResponse = (HttpServletResponse) response;
 
-        if(requestHasParameter(httpRequest, ACTION, "logout")) {
+        if (requestHasParameter(httpRequest, ACTION, "logout")) {
             httpRequest.getSession().setAttribute("userId", null);
-            httpResponse.sendRedirect("/products/login/");
+            httpResponse.sendRedirect(LOGIN_PAGE);
 
-        } else if(sessionContainsUserId(httpRequest)) {
+        } else if (sessionContainsUserId(httpRequest)) {
             chain.doFilter(request, response);
 
-        } else if(httpRequest.getRequestURI().equals(LOGIN_PAGE)) {
+        } else if (LOGIN_PAGE.equals(httpRequest.getRequestURI())) {
             chain.doFilter(request, response);
 
         } else {
@@ -42,7 +45,8 @@ public class LoginFilter implements Filter {
 
     private boolean requestHasParameter(HttpServletRequest req, String attributeName, String attributeValue) {
         Object value = req.getParameter(attributeName);
-        return value != null && value.equals(attributeValue);
+        return attributeValue.equals(value); // wtedy nie musisz sprawdzac czy value jest null, jeszcze lepiej
+        // sprawdzać tak:  Objects.equals(value, attributeName) - wtedy na pewno się uchronisz przed npe.
     }
 
     private boolean sessionContainsUserId(HttpServletRequest httpRequest) {
@@ -50,5 +54,6 @@ public class LoginFilter implements Filter {
     }
 
     @Override
-    public void destroy() {}
+    public void destroy() {
+    }
 }

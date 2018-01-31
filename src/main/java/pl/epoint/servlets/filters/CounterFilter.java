@@ -19,12 +19,13 @@ public class CounterFilter implements Filter {
     private static final String COUNTER = "counter";
 
     @Override
-    public void init(FilterConfig filterConfig) {}
+    public void init(FilterConfig filterConfig) {
+    }
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain) throws IOException, ServletException {
-        HttpSession session = ((HttpServletRequest)request).getSession();
+        HttpSession session = ((HttpServletRequest) request).getSession();
 
         updateSessionCounter(session);
         updateContextCounter(session);
@@ -34,8 +35,8 @@ public class CounterFilter implements Filter {
 
     private void updateContextCounter(HttpSession session) {
         ServletContext context = session.getServletContext();
-        Integer counter = (Integer)context.getAttribute(COUNTER);
-        if(counter == null) {
+        Integer counter = (Integer) context.getAttribute(COUNTER);
+        if (counter == null) {
             counter = 0;
         }
         context.setAttribute(COUNTER, ++counter);
@@ -43,8 +44,8 @@ public class CounterFilter implements Filter {
     }
 
     private void updateSessionCounter(HttpSession session) {
-        Integer counter = (Integer)session.getAttribute(COUNTER);
-        if(counter == null) {
+        Integer counter = (Integer) session.getAttribute(COUNTER);
+        if (counter == null) {
             counter = 0;
         }
         session.setAttribute(COUNTER, ++counter);
@@ -52,5 +53,6 @@ public class CounterFilter implements Filter {
     }
 
     @Override
-    public void destroy() {}
+    public void destroy() {
+    }
 }

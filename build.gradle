@@ -47,6 +47,14 @@ dependencies {
             name: 'annotations',
             version: '13.0'
 
+    compile group: 'org.apache.commons',
+            name: 'commons-lang3',
+            version: '3.7'
+
+    compile group: 'javax.ejb',
+            name: 'javax.ejb-api',
+            version: '3.2'
+
     compileOnly group: 'org.projectlombok',
             name:'lombok',
             version: '1.16.20'

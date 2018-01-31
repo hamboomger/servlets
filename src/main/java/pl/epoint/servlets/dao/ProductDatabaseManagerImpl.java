@@ -2,31 +2,29 @@ package pl.epoint.servlets.dao;
 
 import lombok.extern.log4j.Log4j2;
 
+import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
+import javax.ejb.Singleton;
 import java.math.BigDecimal;
 import java.util.List;
 
 import pl.epoint.servlets.model.Product;
 
 @Log4j2
+@Singleton
 public class ProductDatabaseManagerImpl implements ProductManager {
 
-    private static ProductDatabaseManagerImpl singleton;
+    @EJB
+    private DatabaseConnectionManager databaseConnectionManager;
 
-    private final ProductsDao dao = new ProductsDao(
-            DatabaseConnectionManager.get().getJdbcTemplate());
+    private ProductsDao dao;
 
-    public static ProductDatabaseManagerImpl get() {
-        if(singleton == null) {
-            singleton = new ProductDatabaseManagerImpl();
-        }
-
-        return singleton;
-    }
-
-    private ProductDatabaseManagerImpl() {
-        insertProduct(new Product("Jaja", new BigDecimal(12.2)));
+    @PostConstruct
+    void init() {
+        dao = new ProductsDao(databaseConnectionManager.getJdbcTemplate());
+        insertProduct(new Product("Jaja", BigDecimal.valueOf(12.2)));
         insertProduct(new Product("Więcej jaj", BigDecimal.TEN));
-        insertProduct(new Product("Kazjerka", new BigDecimal(8.25)));
+        insertProduct(new Product("Kazjerka", BigDecimal.valueOf((8.25))));
     }
 
     @Override

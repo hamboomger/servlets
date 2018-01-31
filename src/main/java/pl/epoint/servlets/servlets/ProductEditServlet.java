@@ -2,6 +2,7 @@ package pl.epoint.servlets.servlets;
 
 import lombok.extern.log4j.Log4j2;
 
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -9,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigDecimal;
 
-import pl.epoint.servlets.dao.ProductDatabaseManagerImpl;
 import pl.epoint.servlets.dao.ProductManager;
 import pl.epoint.servlets.model.Product;
 
@@ -27,7 +27,8 @@ public class ProductEditServlet extends HttpServlet {
     private static final String PRODUCT_PRICE = "productPrice";
     private static final String PRODUCT_ID = "productId";
 
-    private ProductManager productManager = ProductDatabaseManagerImpl.get();
+    @EJB(beanName = "ProductDatabaseManagerImpl")
+    private ProductManager productManager;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -41,7 +42,8 @@ public class ProductEditServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String action = getRequiredParam(ACTION, req);
 
-        switch(action) {
+        //dla jednej akcji lepiej dać ifa zamiast switcha.
+        switch (action) {
             case SAVE_PRODUCT_ACTION:
                 saveProduct(req);
                 resp.sendRedirect("/products/list/");
@@ -54,7 +56,7 @@ public class ProductEditServlet extends HttpServlet {
 
     private void addProductToRequestAttributes(HttpServletRequest req, Integer productId) {
         Product product = productManager.getProductByPK(productId);
-        if(product == null)
+        if (product == null)
             throw new IllegalArgumentException(String.format("There is no product with id '%s'", productId));
 
         req.setAttribute("product", product);

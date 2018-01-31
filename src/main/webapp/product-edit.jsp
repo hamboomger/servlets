@@ -1,4 +1,4 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html lang="en" charset="UTF-8">
 <head>
     <meta charset="UTF-8">
@@ -8,64 +8,64 @@
     <link rel="stylesheet" href="/products/css/main.css">
 </head>
 <body>
-    <div class="navbar has-shadow">
-        <div class="navbar-menu is-active">
-            <div class="navbar-end">
-                <div class="navbar-item">
-                    <a href="?action=logout" class="button is-dark">Wyloguj</a>
+<div class="navbar has-shadow">
+    <div class="navbar-menu is-active">
+        <div class="navbar-end">
+            <div class="navbar-item">
+                <a href="?action=logout" class="button is-dark">Wyloguj</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="columns">
+    <div class="column is-three-fifths-tablet is-offset-one-fifth-tablet is-one-third is-offset-one-third">
+        <div class="box">
+            <form action="/products/edit/?action=save_product&productId=${product.id}" method="POST">
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Nazwa: </label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <div class="control">
+                                <input class="input" type="text"
+                                       name="productName" value="${product.name}" required>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
+
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Cena: </label>
+                    </div>
+
+                    <div class="field-body">
+                        <div class="field">
+                            <div class="control">
+                                <input class="input" type="number" step="0.01" min="0"
+                                       name="productPrice" value="${product.price}" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="field is-horizontal">
+                    <div class="field-label"></div>
+                    <div class="field-body">
+                        <div class="field is-grouped">
+                            <div class="control">
+                                <input type="submit" class="button is-primary" value="Zapisz">
+                            </div>
+                            <div class="control">
+                                <a href="/products/list/" class="button is-text">Anuluj</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
-    <div class="columns">
-        <div class="column is-three-fifths-tablet is-offset-one-fifth-tablet is-one-third is-offset-one-third">
-            <div class="box">
-                <form action="/products/edit/?action=save_product&productId=${product.id}" method="POST">
-                    <div class="field is-horizontal">
-                        <div class="field-label is-normal">
-                            <label class="label">Nazwa: </label>
-                        </div>
-                        <div class="field-body">
-                            <div class="field">
-                                <div class="control">
-                                    <input class="input" type="text"
-                                    name="productName" value="${product.name}" required>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="field is-horizontal">
-                        <div class="field-label is-normal">
-                            <label class="label">Cena: </label>
-                        </div>
-
-                        <div class="field-body">
-                            <div class="field">
-                                <div class="control">
-                                    <input class="input" type="number" step="0.01" min="0"
-                                     name="productPrice" value="${product.price}" required>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="field is-horizontal">
-                        <div class="field-label"></div>
-                        <div class="field-body">
-                            <div class="field is-grouped">
-                                <div class="control">
-                                    <input type="submit" class="button is-primary" value="Zapisz">
-                                </div>
-                                <div class="control">
-                                    <a href="/products/list/" class="button is-text">Anuluj</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+</div>
 </body>
 </html>

@@ -17,7 +17,7 @@
                 <h2 class="subtitle">
                     <%= request.getAttribute("javax.servlet.error.exception") %>
                 </h2>
-                <a href="products/" class"is-button is-text">Retry</a>
+                <a href="products/" class="is-button is-text">Retry</a>
             </div>
         </div>
     </section>

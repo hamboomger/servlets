@@ -11,7 +11,7 @@ import java.util.List;
 import pl.epoint.servlets.model.Product;
 
 @Log4j2
-public class ProductsDao {
+class ProductsDao { //klasa i jej pakiety moga być
 
     private static final String TABLE = "products";
 
@@ -21,16 +21,16 @@ public class ProductsDao {
 
     private final JdbcTemplate template;
 
-    public ProductsDao(JdbcTemplate template) {
+    ProductsDao(JdbcTemplate template) {
         this.template = template;
         initTable();
     }
 
-    public List<Product> getProductsList() {
+    List<Product> getProductsList() {
         return template.query("select * from " + TABLE, productRowMapper);
     }
 
-    public Product getProductByPK(Integer id) {
+    Product getProductByPK(Integer id) {
         String query = String.format("select * from %s where %s = ?", TABLE, COL_ID);
         try {
             return template.queryForObject(query, productRowMapper, id);
@@ -39,29 +39,29 @@ public class ProductsDao {
         }
     }
 
-    public void insertProduct(Product product) {
+    void insertProduct(Product product) {
         String query = String.format("insert into %s(%s,%s) values (?,?)", TABLE, COL_NAME, COL_PRICE);
         template.update(query, product.getName(), product.getPrice());
+        /* To raczej nie jest potrzebne:
         Integer id = template.queryForObject("select last_insert_id()", Integer.class);
-        product.setId(id);
+        product.setId(id); */
     }
 
-    public void updateProduct(Product product) {
+    void updateProduct(Product product) {
         String query = String.format(
                 "update %s set %s =?, %s = ? where %s = ?",
                 TABLE, COL_NAME, COL_PRICE, COL_ID);
         template.update(query, product.getName(), product.getPrice(), product.getId());
     }
 
-    public void deleteProduct(Product product) {
+    void deleteProduct(Product product) {
         String query = String.format("delete from %s where %s = ?", TABLE, COL_ID);
         template.update(query, product.getId());
     }
 
-    public Product deleteProductByPK(Integer id) {
+    Product deleteProductByPK(Integer id) {
         Product product = getProductByPK(id);
-        String query = String.format("delete from %s where %s = ?", TABLE, COL_ID);
-        template.update(query, id);
+        deleteProduct(product); //reużycie kodu
         return product;
     }
 

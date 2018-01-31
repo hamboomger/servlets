@@ -1,5 +1,7 @@
 package pl.epoint.servlets.dao;
 
+import javax.annotation.PostConstruct;
+import javax.ejb.Singleton;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,27 +11,21 @@ import pl.epoint.servlets.model.Product;
 
 import static com.google.common.collect.Iterables.find;
 
+@Singleton
 public class ProductMemoryManagerImpl implements ProductManager {
 
-    private static ProductMemoryManagerImpl daoSingleton;
     private static int productsCounter;
 
     private List<Product> products = new ArrayList<>();
 
-    {
-        insertProduct(new Product("Jaja", new BigDecimal(12.2)));
+    @PostConstruct
+    void init() {
+        insertProduct(new Product("Jaja", BigDecimal.valueOf(12.2)));
         insertProduct(new Product("Więcej jaj", BigDecimal.TEN));
-        insertProduct(new Product("Kazjerka", new BigDecimal(8.25)));
+        insertProduct(new Product("Kazjerka", BigDecimal.valueOf(8.25)));
         insertProduct(new Product("Śmietana", new BigDecimal(-1)));
     }
 
-    public static ProductMemoryManagerImpl get() {
-        if(daoSingleton == null)
-            daoSingleton = new ProductMemoryManagerImpl();
-        return daoSingleton;
-    }
-
-    private ProductMemoryManagerImpl() {}
 
     @Override
     public List<Product> getProductsList() {

@@ -13,7 +13,7 @@ import static pl.epoint.servlets.util.ServletUtils.getRequiredParam;
 @Log4j2
 public class LoginServlet extends HttpServlet {
 
-    private int usersIdCounter;
+    private volatile int usersIdCounter;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -22,8 +22,7 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        boolean success = performLogin(req);
-        if(success) {
+        if(performLogin(req)) {
             req.getSession().setAttribute("userId", usersIdCounter++);
             resp.sendRedirect("/products/");
         } else {
@@ -37,7 +36,10 @@ public class LoginServlet extends HttpServlet {
         String password = getRequiredParam("password", httpRequest);
         log.info("Login: {}, password: {}", login, password);
 
-        return login.equals("jack") && password.equals("sparrow");
+        /* return login.equals("jack") && password.equals("sparrow");
+           Stałe z lewej strony - de facto hasło możnaby umieścić w kongiruacji
+         */
+        return "jack".equals(login) && "sparrow".equals(password);
     }
 
 }
